@@ -260,7 +260,6 @@
 // <script src="https://cdn.jsdelivr.net/npm/peerjs/dist/peerjs.min.js"></script>
 console.log("Connecting to server...");
 const socket = io("/meeting", { secure: true });
-
 const myVideoGrid = document.getElementById("my-video");
 const otherVideoGrid = document.getElementById("video-other");
 const myVideo = document.createElement("video");
@@ -286,7 +285,7 @@ const peer = new Peer(undefined, {
   // host: "127.0.0.1",
   // port: 3030,
   // path: "/peerjs",
-  host: "new-video-chat.onrender.com",
+  host: live_url,
   secure: true, // Use true for HTTPS
   port: 443,
   path: "/peerjs",
@@ -393,7 +392,7 @@ socket.on('retryRandom',(boo)=>{
 
 socket.on("leave", (roomId) => {
   socket.emit("leave-all", roomId);
-  window.location = "https://new-video-chat.onrender.com";
+  window.location = `https://${live_url}`;
 });
 
 const connectToNewUser = (userId, stream) => {
@@ -480,7 +479,7 @@ function getEndCall() {
   // }
   if (childElements.length > 1) {
     socket.emit("random-leave");
-  } else window.location = "https://new-video-chat.onrender.com";
+  } else window.location = `https://${live_url}`;
 
   MessageInvoker.postMessage("Trigger from Javascript code");
 }

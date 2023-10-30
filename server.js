@@ -10,6 +10,8 @@ const io = require("socket.io")(server, {
   },
 });
 const { ExpressPeerServer } = require("peer");
+const { config } = require("dotenv");
+config();
 const opinions = {
   debug: true,
 };
@@ -32,7 +34,9 @@ app.use("/join-meeting", express.static(path.join(__dirname, "public")));
 // });
 
 app.get("/join-meeting", (req, res) => {
-  res.render("join-meeting");
+  res.render("join-meeting", {
+    live_url: process.env.LIVE_URL,
+  });
   // io.on("connection",(socket)=>{
   //   console.log('User Connected')
   // });
