@@ -286,7 +286,7 @@ const peer = new Peer(undefined, {
   // host: "127.0.0.1",
   // port: 3030,
   // path: "/peerjs",
-  host: "459b-122-176-230-86.ngrok-free.app",
+  host: "new-video-chat.onrender.com",
   secure: true, // Use true for HTTPS
   port: 443,
   path: "/peerjs",
@@ -393,7 +393,7 @@ socket.on('retryRandom',(boo)=>{
 
 socket.on("leave", (roomId) => {
   socket.emit("leave-all", roomId);
-  window.location = "https://459b-122-176-230-86.ngrok-free.app";
+  window.location = "https://new-video-chat.onrender.com";
 });
 
 const connectToNewUser = (userId, stream) => {
@@ -480,7 +480,7 @@ function getEndCall() {
   // }
   if (childElements.length > 1) {
     socket.emit("random-leave");
-  } else window.location = "https://459b-122-176-230-86.ngrok-free.app";
+  } else window.location = "https://new-video-chat.onrender.com";
 
   MessageInvoker.postMessage("Trigger from Javascript code");
 }
