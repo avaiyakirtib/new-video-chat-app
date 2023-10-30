@@ -10,41 +10,26 @@
     <script src="https://unpkg.com/peerjs@1.3.1/dist/peerjs.min.js"></script>
 
 </head>
-<body>
-    <div class="header">
-      <div class="logo">
-        <div class="header__back">
-          <i class="fas fa-angle-left"></i>
-        </div>
-        <h3>Video Chat</h2>
-      </div>
-    </div>  
+<body> 
     <div class="main">  
-    <div class="main__left">
-      <div class="videos__group">
-        <div id="video-grid">
-
+        <div class="video-main">
+          <div class="my-video" id="my-video"></div>
+          <div class="video-other" id="video-other"></div>
         </div>
-      </div>
-      <div class="options">
-        <div class="options__left">
-          <div id="stopVideo" class="options__button">
-            <i class="fa fa-video-camera"></i>
-          </div>
-          <div id="muteButton" class="options__button">
-            <i class="fa fa-microphone"></i>
-          </div>
-          <div class="options__button" onclick="getEndCall()">
-            <i class="fa-solid fa-phone-slash"></i>
-          </div>
-          <div id="showChat" class="options__button">
-            <i class="fa fa-comment"></i>
+        <div class="options">
+          <div class="options__left">
+            <div id="stopVideo" class="options__button">
+              <i class="fa fa-video-camera"></i>
+            </div>
+            <div id="muteButton" class="options__button">
+              <i class="fa fa-microphone"></i>
+            </div>
+            <div class="options__button" style="background-color: red;" onclick="getEndCall()">
+              <i class="fa-solid fa-phone-slash"></i> 
+            </div>
           </div>
         </div>
-      </div>
     </div>
-    
-  </div>
   </body>
 <script src="js/joinMeeting.js"></script>
 </html>

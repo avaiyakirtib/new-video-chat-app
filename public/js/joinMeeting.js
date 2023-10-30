@@ -261,31 +261,32 @@
 console.log("Connecting to server...");
 const socket = io("/meeting", { secure: true });
 
-const videoGrid = document.getElementById("video-grid");
+const myVideoGrid = document.getElementById("my-video");
+const otherVideoGrid = document.getElementById("video-other");
 const myVideo = document.createElement("video");
 const showChat = document.querySelector("#showChat");
 const backBtn = document.querySelector(".header__back");
 myVideo.muted = true;
 
-backBtn.addEventListener("click", () => {
-  document.querySelector(".main__left").style.display = "flex";
-  document.querySelector(".main__left").style.flex = "1";
-  document.querySelector(".main__right").style.display = "none";
-  document.querySelector(".header__back").style.display = "none";
-});
+// backBtn.addEventListener("click", () => {
+//   document.querySelector(".main__left").style.display = "flex";
+//   document.querySelector(".main__left").style.flex = "1";
+//   document.querySelector(".main__right").style.display = "none";
+//   document.querySelector(".header__back").style.display = "none";
+// });
 
-showChat.addEventListener("click", () => {
-  document.querySelector(".main__right").style.display = "flex";
-  document.querySelector(".main__right").style.flex = "1";
-  document.querySelector(".main__left").style.display = "none";
-  document.querySelector(".header__back").style.display = "block";
-});
+// showChat.addEventListener("click", () => {
+//   document.querySelector(".main__right").style.display = "flex";
+//   document.querySelector(".main__right").style.flex = "1";
+//   document.querySelector(".main__left").style.display = "none";
+//   document.querySelector(".header__back").style.display = "block";
+// });
 
 const peer = new Peer(undefined, {
   // host: "127.0.0.1",
   // port: 3030,
   // path: "/peerjs",
-  host: "new-video-chat.onrender.com",
+  host: "459b-122-176-230-86.ngrok-free.app",
   secure: true, // Use true for HTTPS
   port: 443,
   path: "/peerjs",
@@ -308,12 +309,14 @@ navigator.mediaDevices
     console.log("inside the the");
     //not working
     // socket.emit("random");
+    myVideoGrid.append(myVideo);
     addVideoStream(myVideo, stream);
 
     peer.on("call", (call) => {
       console.log("someone call me");
       call.answer(stream);
       const video = document.createElement("video");
+      otherVideoGrid.append(video)
       call.on("stream", (userVideoStream) => {
         addVideoStream(video, userVideoStream);
       });
@@ -390,13 +393,14 @@ socket.on('retryRandom',(boo)=>{
 
 socket.on("leave", (roomId) => {
   socket.emit("leave-all", roomId);
-  window.location = "https://new-video-chat.onrender.com";
+  window.location = "https://459b-122-176-230-86.ngrok-free.app";
 });
 
 const connectToNewUser = (userId, stream) => {
   console.log("I call someone" + userId);
   const call = peer.call(userId, stream);
   const video = document.createElement("video");
+  otherVideoGrid.append(video);
   call.on("stream", (userVideoStream) => {
     console.log("i call someone stream");
     addVideoStream(video, userVideoStream);
@@ -430,7 +434,7 @@ const addVideoStream = (video, stream) => {
   video.srcObject = stream;
   video.addEventListener("loadedmetadata", () => {
     video.play();
-    videoGrid.append(video);
+    // videoGrid.append(video);
   });
 };
 
@@ -476,7 +480,9 @@ function getEndCall() {
   // }
   if (childElements.length > 1) {
     socket.emit("random-leave");
-  } else window.location = "https://new-video-chat.onrender.com";
+  } else window.location = "https://459b-122-176-230-86.ngrok-free.app";
+
+  MessageInvoker.postMessage("Trigger from Javascript code");
 }
 
 stopVideo.addEventListener("click", () => {
