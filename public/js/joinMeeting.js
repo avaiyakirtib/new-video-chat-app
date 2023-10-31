@@ -392,6 +392,7 @@ socket.on("retryRandom", (boo) => {
 socket.on("leave", (roomId) => {
   socket.emit("leave-all", roomId);
   window.location = `https://${live_url}`;
+  window.flutter_inappwebview.callHandler("myHandler", "true");
 });
 
 const connectToNewUser = (userId, stream) => {
@@ -481,7 +482,6 @@ function getEndCall() {
   } else window.location = `https://${live_url}`;
 
   // MessageInvoker.postMessage("Trigger from Javascript code");
-  window.flutter_inappwebview.callHandler("myHandler", "true");
 }
 
 stopVideo.addEventListener("click", () => {
