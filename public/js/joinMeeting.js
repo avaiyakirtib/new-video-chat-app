@@ -315,7 +315,7 @@ navigator.mediaDevices
       console.log("someone call me");
       call.answer(stream);
       const video = document.createElement("video");
-      otherVideoGrid.append(video)
+      otherVideoGrid.append(video);
       call.on("stream", (userVideoStream) => {
         addVideoStream(video, userVideoStream);
       });
@@ -367,15 +367,14 @@ navigator.mediaDevices
 
 //work........................
 let intervalId = setInterval(() => {
-  socket.emit('random');
+  socket.emit("random");
 }, 1000); // Set the interval time in milliseconds
-socket.on('retryRandom',(boo)=>{
+socket.on("retryRandom", (boo) => {
   if (boo) {
     console.log("Stopping the interval");
     clearInterval(intervalId); // Stop the interval if boo is false
   }
-})
-
+});
 
 // const emitRandom = () => {
 //   socket.emit("random");
@@ -481,7 +480,8 @@ function getEndCall() {
     socket.emit("random-leave");
   } else window.location = `https://${live_url}`;
 
-  MessageInvoker.postMessage("Trigger from Javascript code");
+  // MessageInvoker.postMessage("Trigger from Javascript code");
+  window.flutter_inappwebview.callHandler("myHandler", "true");
 }
 
 stopVideo.addEventListener("click", () => {
