@@ -65,11 +65,11 @@ app.get("/join-meeting", (req, res) => {
 let availableUser = [];
 let rooms = [];
 
-app.get("/", (req, res) => {
-  // console.log(availableUser);
-  // return res.send(availableUser);
-  return res.render("start");
-});
+// app.get("/", (req, res) => {
+//   // console.log(availableUser);
+//   // return res.send(availableUser);
+//   return res.render("start");
+// });
 
 app.get("/user", (req, res) => {
   console.log(availableUser);
@@ -155,8 +155,8 @@ meetingIo.on("connection", (socket) => {
         // }
         console.log("No user found or same user found, retrying...");
         // return socket.emit("retryRandom", true);
-        return
-      } 
+        return;
+      }
       let roomId = uuidv4();
       console.log(roomId, "room ID");
       otherSocket = otherUser?.socket;
@@ -228,7 +228,7 @@ meetingIo.on("connection", (socket) => {
       // console.log("Online user dfdfd", availableUser.length);
       // meetingIo.emit("online-user", availableUser.length);
       //......................... Phase 2 .....................................
-  
+
       rooms = rooms.filter((e) => {
         if (e.userId == userId || e.otherUser == userId) {
           meetingIo.to(e.roomId).emit("leave", e.roomId);
@@ -244,7 +244,6 @@ meetingIo.on("connection", (socket) => {
       }
     });
   });
-
 });
 
 server.listen(process.env.PORT || 3030);

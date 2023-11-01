@@ -265,6 +265,7 @@ const otherVideoGrid = document.getElementById("video-other");
 const myVideo = document.createElement("video");
 const showChat = document.querySelector("#showChat");
 const backBtn = document.querySelector(".header__back");
+const overlay = document.getElementById("overlay");
 myVideo.muted = true;
 
 // backBtn.addEventListener("click", () => {
@@ -305,7 +306,6 @@ navigator.mediaDevices
   })
   .then((stream) => {
     myVideoStream = stream;
-    console.log("inside the the");
     //not working
     // socket.emit("random");
     myVideoGrid.append(myVideo);
@@ -371,6 +371,7 @@ let intervalId = setInterval(() => {
 }, 1000); // Set the interval time in milliseconds
 socket.on("retryRandom", (boo) => {
   if (boo) {
+    overlay.style.display = "none";
     console.log("Stopping the interval");
     clearInterval(intervalId); // Stop the interval if boo is false
   }
@@ -391,7 +392,7 @@ socket.on("retryRandom", (boo) => {
 
 socket.on("leave", (roomId) => {
   socket.emit("leave-all", roomId);
-  window.location = `https://${live_url}`;
+  window.location = `https://${live_url}/join-meeting`;
   window.flutter_inappwebview.callHandler("myHandler", "true");
 });
 
@@ -437,7 +438,7 @@ const addVideoStream = (video, stream) => {
   });
 };
 
-const retryRandom = document.getElementById("retryRandom");
+// const retryRandom = document.getElementById("retryRandom");
 const muteButton = document.querySelector("#muteButton");
 const stopVideo = document.querySelector("#stopVideo");
 const allVideo = document.getElementsByTagName("video");
@@ -479,7 +480,7 @@ function getEndCall() {
   // }
   if (childElements.length > 1) {
     socket.emit("random-leave");
-  } else window.location = `https://${live_url}`;
+  } else window.location = `https://${live_url}/join-meeting`;
 
   // MessageInvoker.postMessage("Trigger from Javascript code");
 }
