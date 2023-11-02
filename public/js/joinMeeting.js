@@ -366,14 +366,18 @@ navigator.mediaDevices
 // });
 
 //work........................
+let setTimeoutLimit = setTimeout(() => {
+  window.location = `https://${live_url}`;
+}, 15 * 1000);
 let intervalId = setInterval(() => {
   socket.emit("random");
-}, 1000); // Set the interval time in milliseconds
+}, 1000); 
 socket.on("retryRandom", (boo) => {
   if (boo) {
     overlay.style.display = "none";
     console.log("Stopping the interval");
-    clearInterval(intervalId); // Stop the interval if boo is false
+    clearInterval(intervalId);
+    clearTimeout(setTimeoutLimit);
   }
 });
 
@@ -414,11 +418,13 @@ const connectToNewUser = (userId, stream) => {
 socket.on("user-disconnected", (userId) => {
   console.log("cut the call", userId);
   if (peers[userId]) peers[userId].close();
-  const parentElement = myVideo.parentElement;
-  const childElements = parentElement.children;
-  for (let i = childElements.length - 1; i > 0; i--) {
-    parentElement.removeChild(childElements[i]);
-  }
+  // const parentElement = myVideo.parentElement;
+  // const childElements = parentElement.children;
+  // for (let i = childElements.length - 1; i > 0; i--) {
+  //   parentElement.removeChild(childElements[i]);
+  // }
+  // window.flutter_inappwebview.callHandler("myHandler", "true");
+  // window.flutter_inappwebview.callHandler("myHandler", "true");
 });
 
 peer.on("open", (id) => {
@@ -478,11 +484,12 @@ function getEndCall() {
   // for (let i = childElements.length - 1; i > 0; i--) {
   //   parentElement.removeChild(childElements[i]);
   // }
-  if (childElements.length > 1) {
-    socket.emit("random-leave");
-  } else window.location = `https://${live_url}/join-meeting`;
+  // if (childElements.length > 1) {
+  socket.emit("random-leave");
+  // } else window.location = `https://${live_url}/join-meeting`;
 
   // MessageInvoker.postMessage("Trigger from Javascript code");
+  // window.flutter_inappwebview.callHandler("myHandler", "true");
 }
 
 stopVideo.addEventListener("click", () => {
