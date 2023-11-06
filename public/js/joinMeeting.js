@@ -368,10 +368,11 @@ navigator.mediaDevices
 //work........................
 let setTimeoutLimit = setTimeout(() => {
   window.location = `https://${live_url}`;
+  window.flutter_inappwebview.callHandler("myHandler", "true");
 }, 15 * 1000);
 let intervalId = setInterval(() => {
   socket.emit("random");
-}, 1000); 
+}, 1000);
 socket.on("retryRandom", (boo) => {
   if (boo) {
     overlay.style.display = "none";
